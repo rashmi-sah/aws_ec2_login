@@ -17,19 +17,16 @@ jobs:
             
         run: |
           mkdir -p ~/.ssh/
-          echo "$$PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "$HOSTNAME" > ~/.ssh/known_hosts
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
         env:
-          PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
-          HOSTNAME : ${{ secrets.HOSTNAME  }}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
-          
-      - name: login to ec2
-        env:
-          PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
-          HOSTNAME : ${{ secrets.HOSTNAME  }}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key    
-        shell: bash
-        run: |
-          ssh  -o StrictHostKeyChecking=no -i $SSH_KEY_PATH ubuntu@ec2-35-174-172-10.compute-1.amazonaws.com
+          SSH_USER: ${{ secrets.USER_NAME }}
+          SSH_KEY: ${{ secrets.PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.HOSTNAME }}
