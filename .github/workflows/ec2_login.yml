@@ -32,4 +32,10 @@ jobs:
           SSH_HOST: ${{ secrets.HOSTNAME }}
           
       - name: login the server
-        run: ssh staging 
+        run: |
+          ssh staging  '
+          
+            #Now we have got the access of EC2 and we will start the deploy .
+            touch myfile.txt
+            echo "This is first line" >> myfile.txt            
+          '
