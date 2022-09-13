@@ -20,5 +20,5 @@ jobs:
             USER_NAME : ${{ secrets.USER_NAME  }}
             
         run: |
-          echo  "$PRIVATE_KEY"
-          echo  "$HOSTNAME"
+          echo  ${{ secrets.AWS_PRIVATE_KEY  }}
+          echo  ${{ secrets.HOSTNAME  }}
