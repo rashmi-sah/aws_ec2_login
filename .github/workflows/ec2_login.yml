@@ -20,5 +20,7 @@ jobs:
             USER_NAME : ${{ secrets.USER_NAME  }}
             
         run: |
-          echo  ${{ secrets.AWS_PRIVATE_KEY  }}
-          echo  ${{ secrets.HOSTNAME  }}
+          ssh -i ${{ secrets.AWS_PRIVATE_KEY  }} ubuntu@ec2-35-174-172-10.compute-1.amazonaws.com '
+            touch myfile.txt
+            echo "This is first line" >> myfile.txt            
+          '
