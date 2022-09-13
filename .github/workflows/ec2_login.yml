@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2 
-      - name: Deploy in EC2
+      - name: Create ssh
             
         run: |
           mkdir -p ~/.ssh/
@@ -24,3 +24,8 @@ jobs:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
           HOSTNAME : ${{ secrets.HOSTNAME  }}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+          
+      - name: login to ec2
+            
+        run: |
+          ssh -i $SSH_KEY_PATH ubuntu@ec2-35-174-172-10.compute-1.amazonaws.com
