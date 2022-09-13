@@ -26,6 +26,9 @@ jobs:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
           
       - name: login to ec2
-            
+        env:
+          PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+          HOSTNAME : ${{ secrets.HOSTNAME  }}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key      
         run: |
           ssh -i $SSH_KEY_PATH ubuntu@ec2-35-174-172-10.compute-1.amazonaws.com
