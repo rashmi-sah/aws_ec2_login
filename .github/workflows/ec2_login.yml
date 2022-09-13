@@ -30,3 +30,6 @@ jobs:
           SSH_USER: ${{ secrets.USER_NAME }}
           SSH_KEY: ${{ secrets.PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.HOSTNAME }}
+          
+      - name: login the server
+        run: ssh staging 
